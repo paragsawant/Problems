@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProblemA.Model
 {
+    [Serializable]
     public class Contact
     {
         public Contact(string firstName, string lastName, List<Address> addresses) : this(firstName, lastName, new DateTime(1987, 01, 13), addresses)

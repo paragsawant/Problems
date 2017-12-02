@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 
 namespace ProblemA.Model
 {
+    [Serializable]
     public class Employee
     {
-        public Employee(int id, string firstName, string lastName, string address) : this(id, firstName, lastName, DateTime.Now, DateTime.Now.AddYears(-10), address)
+        public Employee(int id, string firstName, string lastName, string address) : this(id, firstName, lastName, DateTime.Now, DateTime.Now.AddYears(-10), address,911)
         { }
 
-        public Employee(int id, string firstName, string lastName, DateTime birthDate, DateTime dateOfJoining, string address)
+        public Employee(int id, string firstName, string lastName, DateTime birthDate, DateTime dateOfJoining, string address, int contactNumber)
         {
             FirstName = firstName;
             LastName = lastName;
             DateOfBirth = birthDate;
             DateOfJoining = dateOfJoining;
-            EmployeeAddress = address;
+            Address = address;
+            ContactNumber = contactNumber;
         }
 
         public int EmployeeId { get; set; }
@@ -25,6 +27,7 @@ namespace ProblemA.Model
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime DateOfJoining { get; set; }
-        public string EmployeeAddress { get; set; }
+        public string Address { get; set; }
+        public int ContactNumber { get; set; }
     }
 }

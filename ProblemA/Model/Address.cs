@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProblemA.Model
 {
+    [Serializable]
     public class Address
     {
         public Address(string address1, string address2, int zipCode, string city, string state, string country)
