@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/A/ProblemA/obj/Debug
+/ProblemA/obj/Debug
+/ProblemA/bin/Debug
+/ProblemA/bin/Debug
+/packages/Newtonsoft.Json.10.0.3
