@@ -9,3 +9,10 @@
 /packages/Newtonsoft.Json.10.0.3
 /packages
 /ProblemB/obj/Debug
+/ProblemB/bin/Debug
+/ProblemD/bin/Debug
+/ProblemD/obj/Debug
+/WebAPI/obj/Debug
+/WebAPI.Tests/obj/Debug
+/WebAPI.Tests/bin/Debug
+/WebAPI/bin
