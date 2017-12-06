@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace WebAPI.Data.Sql
 {
     public class SqlSetup
     {
-        public const string ConnectionStringFormat =
-            "Server=" + SqlServer + ";Database={0};Trusted_Connection=yes;Connection Timeout=60";
-
         public const string PetInsuranceDatabaseName = "PetInsuranceDb";
 
         private const string CreateDatabaseTemplate = "CREATE DATABASE {0}";
@@ -26,6 +28,8 @@ namespace WebAPI.Data.Sql
             try
             {
                 CreateMetadataSqlDatabase(PetInsuranceDatabaseName);
+                RunTestSqlScript(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName), "Schema.sql");
+                RunTestSqlScript(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName), "InsertDataScript.sql");
             }
             catch (Exception ex)
             {
@@ -104,6 +108,46 @@ namespace WebAPI.Data.Sql
         private static string GetLocalServerConnectionString()
         {
             return string.Format(LocalServerConnectionStringTemplate, "master");
+        }
+
+        public static void RunTestSqlScript(string connectionString, string scriptName)
+        {
+            string path = HttpContext.Current.Server.MapPath ("~/bin/Data/Script/" + scriptName);
+            var script = File.ReadAllText(path);
+            ExecuteScript(connectionString, script);
+        }
+
+        public static void ExecuteScript(string connectionString, string script)
+        {
+            var commands = Regex.Split(script, @"^\s*GO\s*$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            string currentlyExecutingStatement = "";
+
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var command in commands.Where(command => !string.IsNullOrWhiteSpace(command)))
+                        {
+                            using (var sqlCommand = new SqlCommand(command, conn, transaction))
+                            {
+                                currentlyExecutingStatement = command;
+                                sqlCommand.ExecuteNonQuery();
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
         }
     }
 }
