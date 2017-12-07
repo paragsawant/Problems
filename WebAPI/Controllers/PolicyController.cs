@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 
 namespace WebAPI.Controllers
 {
-    //[RoutePrefix("polcies")]
     public class PolicyController : ApiController
     {
         [HttpDelete]

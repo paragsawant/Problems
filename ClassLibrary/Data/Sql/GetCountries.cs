@@ -1,29 +1,23 @@
-﻿using ClassLibrary.Common;
-using ClassLibrary.Model;
-using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GetCountries.cs" company="Microsoft">
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Common;
 using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
+using ClassLibrary.Common;
+using ClassLibrary.Model;
 
 namespace ClassLibrary.Data.Sql
 {
     public class GetCountries : SqlClient<List<Country>>
     {
-        public GetCountries(Func<Task<string>> connectionStringFunc) : base(connectionStringFunc)
-        {
-        }
-
-        public async Task<List<Country>> ExecuteReaderAsync()
-        {
-            return await this.ExecuteReaderAsync();
-        }
-
         protected override async Task<List<Country>> ReadAsync(DbDataReader reader)
         {
-            List<Country> countries = new List<Country>();
+            var countries = new List<Country>();
             while (await reader.ReadAsync())
             {
                 countries.Add(ReadCountry(reader));
@@ -40,7 +34,12 @@ namespace ClassLibrary.Data.Sql
 
         private static Country ReadCountry(IDataRecord reader)
         {
-            return new Country() { Id = (int)reader.GetValue(0), Name = (string)reader.GetValue(1), IsoCode = (string)reader.GetValue(2) };
+            return new Country
+                   {
+                       Id = (int) reader.GetValue(0),
+                       Name = (string) reader.GetValue(1),
+                       IsoCode = (string) reader.GetValue(2)
+                   };
         }
     }
 }

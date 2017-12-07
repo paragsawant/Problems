@@ -10,9 +10,14 @@ namespace ClassLibrary
 {
     public class DataLayerAccess : IDataLayerAccess
     {
+        public DataLayerAccess()
+        {
+            
+        }
+
         public Task<List<Country>> GetCounties()
         {
-            var obj = new GetCountries(this.ConnectionStringFunc);
+            var obj = new GetCountries();
             return obj.ExecuteReaderAsync();
         }
     }

@@ -1,13 +1,10 @@
-﻿using ClassLibrary.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ClassLibrary.Model;
 
 namespace ClassLibrary
 {
-    interface IDataLayerAccess
+    public interface IDataLayerAccess
     {
         Task<List<Country>> GetCounties();
     }

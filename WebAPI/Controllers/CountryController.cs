@@ -1,31 +1,34 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CountryController.cs" company="Microsoft">
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
+using ClassLibrary;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers
 {
-    public class CountryController
+    public class CountryController : BaseController
     {
-        public CountryController()
+        public CountryController(IDataLayerAccess dataLayerAccess) : base(dataLayerAccess)
         {
-
         }
 
         [HttpGet]
         [Route("countries")]
         public async Task<HttpResponseMessage> GetCountries()
         {
+            var countries = await this.DataLayerAccess.GetCounties();
             return new HttpResponseMessage
-            {
-                Content = new StringContent(JsonConvert.SerializeObject("Test")),
-                StatusCode = HttpStatusCode.OK
-            };
+                   {
+                       Content = new StringContent(JsonConvert.SerializeObject(countries)),
+                       StatusCode = HttpStatusCode.OK
+                   };
         }
     }
 }

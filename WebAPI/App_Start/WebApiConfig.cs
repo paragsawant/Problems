@@ -1,6 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="WebApiConfig.cs" company="Microsoft">
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System.Web.Http;
 using WebAPI.Data.Sql;
 
@@ -10,7 +13,7 @@ namespace WebAPI
     {
         static WebApiConfig()
         {
-            SqlSetup setup = new SqlSetup();
+            var setup = new SqlSetup();
         }
 
         public static void Register(HttpConfiguration config)
@@ -23,10 +26,8 @@ namespace WebAPI
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new {id = RouteParameter.Optional}
             );
-
-            config.Routes.MapHttpRoute("Policy", "{Controller}/policy/");
         }
     }
 }
