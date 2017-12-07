@@ -1,10 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="WebApiConfig.cs" company="Microsoft">
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-using System.Web.Http;
+﻿using System.Web.Http;
 using WebAPI.Data.Sql;
 
 namespace WebAPI
