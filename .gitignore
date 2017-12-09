@@ -2,7 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/A/ProblemA/obj/Debug
 /ProblemA/obj/Debug
 /ProblemA/bin/Debug
 /ProblemA/bin/Debug
@@ -10,15 +9,9 @@
 /packages
 /ProblemB/obj/Debug
 /ProblemB/bin/Debug
-/ProblemD/bin/Debug
-/ProblemD/obj/Debug
 /WebAPI/obj/Debug
-/WebAPI.Tests/obj/Debug
-/WebAPI.Tests/bin/Debug
 /WebAPI/bin
 /ClassLibrary/obj/Debug
-/PoblemD/bin
-/PoblemD/obj/Debug
 /ClassLibrary/bin/Debug
 /ProblemD_UI/obj/Debug
 /ProblemD_UI/bin
