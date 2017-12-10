@@ -18,6 +18,16 @@ namespace ClassLibrary.Common
 
         public const string CancelPolicyStoredProcedure = "[dbo].[CancelPolicy]";
 
+        public const string RemovePetFromPolicyStoredProcedure = "[dbo].[RemovePetFromPolicy]";
+
+        public const string AddPetToPolicyStoredProcedure = "[dbo].[AddPetToPolicy]";
+
+        public const string TransferPetStoredProcedure = "[dbo].[TransferPet]";
+
+        public const string ParamOldPetOwnerId = "@oldPetOwnerId";
+
+        public const string ParamNewPetOwnerId = "@newPetOwnerId";
+
         public const string DBName = "PetInsuranceDb";
 
         public const string ParamPolicyNumber = "@policyNumber";

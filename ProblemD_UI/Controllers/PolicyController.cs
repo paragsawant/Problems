@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using ProblemD_UI.Context;
+using ClassLibrary.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,10 +13,25 @@ namespace ProblemD_UI.Controllers
 {
     public class PolicyController : Controller
     {
+        CountryContext countryContext = new CountryContext();
         // GET: Policy
-        public ActionResult Index()
+        public async Task<ActionResult> PolicyDetailsView()
         {
-            return View();
+            List<Policy> policies = new List<Policy>();
+            string Baseurl = "http://localhost:46070/";
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await client.GetAsync("policies");
+                if (response.IsSuccessStatusCode)
+                {
+                    var _policies = response.Content.ReadAsStringAsync().Result;
+                    policies = JsonConvert.DeserializeObject<List<Policy>>(_policies);
+                }
+            }
+            return View(policies);
         }
 
         // GET: Policy/Details/5
@@ -21,9 +41,12 @@ namespace ProblemD_UI.Controllers
         }
 
         // GET: Policy/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            Country country = new Country();
+            country.CountryList = new SelectList(await countryContext.GetCountryListAsync(), "Id", "IsoCode");
+            ViewBag.CountryList = country.CountryList;
+            return View(new Policy());
         }
 
         // POST: Policy/Create

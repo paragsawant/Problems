@@ -70,12 +70,14 @@
     <Compile Include="Common\SqlClient.cs" />
     <Compile Include="Common\EnumUtil.cs" />
     <Compile Include="DataLayerAccess.cs" />
+    <Compile Include="Data\Sql\AddPetToPolicy.cs" />
     <Compile Include="Data\Sql\CancelPolicy.cs" />
     <Compile Include="Data\Sql\EnrollPolicy.cs" />
     <Compile Include="Data\Sql\GetCountries.cs" />
     <Compile Include="Data\Sql\GetPolicy.cs" />
     <Compile Include="Data\Sql\GetPolicies.cs" />
     <Compile Include="Data\Sql\RemovePetFromPolicy.cs" />
+    <Compile Include="Data\Sql\TransferPet.cs" />
     <Compile Include="IDataLayerAccess.cs" />
     <Compile Include="Model\Breed.cs" />
     <Compile Include="Model\Country.cs" />

@@ -15,6 +15,12 @@ namespace ClassLibrary
 
         }
 
+        public Task<bool> AddPetToPolicy(string policyNumber, IList<Pet> pets)
+        {
+            var obj = new AddPetToPolicy(policyNumber, pets);
+            return obj.ExecuteReaderAsync();
+        }
+
         public Task<bool> CancelPolicy(string PolicyNumber)
         {
             var obj = new CancelPolicy(PolicyNumber);
@@ -42,6 +48,18 @@ namespace ClassLibrary
         public Task<Policy> GetPolicy(string PolicyNumber)
         {
             var obj = new GetPolicy(PolicyNumber);
+            return obj.ExecuteReaderAsync();
+        }
+
+        public Task<bool> RemovePetFromPolicy(string policyNumber, int petId)
+        {
+            var obj = new RemovePetFromPolicy(policyNumber, petId);
+            return obj.ExecuteReaderAsync();
+        }
+
+        public Task<bool> TransferPet(int oldPetOwnerId, int petId, int newPetOwnerId)
+        {
+            var obj = new TransferPet(oldPetOwnerId, petId,newPetOwnerId);
             return obj.ExecuteReaderAsync();
         }
     }

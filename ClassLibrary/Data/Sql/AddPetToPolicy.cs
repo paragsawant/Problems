@@ -5,17 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Common;
-using System.Data;
 using ClassLibrary.Model;
+using System.Data;
 
 namespace ClassLibrary.Data.Sql
 {
-    public class EnrollPolicy : SqlClient<bool>
+    public class AddPetToPolicy : SqlClient<bool>
     {
-        Policy _policy;
-        public EnrollPolicy(Policy policy)
+        private readonly string _policyNumber;
+        private readonly IList<Pet> _pets;
+
+        public AddPetToPolicy(string policyNumber, IList<Pet> pets)
         {
-            this._policy = policy;
+            this._pets = pets;
+            this._policyNumber = policyNumber;
         }
 
         protected override async Task<bool> ReadAsync(DbDataReader reader)
@@ -38,10 +41,9 @@ namespace ClassLibrary.Data.Sql
         protected override void SetCommandDetails(DbCommand command)
         {
             command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = CommonConstant.EnrollPolicyStoredProcedure;
-            command.Parameters.Add(this.NVarCharParameter(CommonConstant.ParamPetOwnerName, this._policy.PetOwnerName));
-            command.Parameters.Add(this.BigIntParameter(CommonConstant.ParamCountryId, this._policy.CountryId));
-            command.Parameters.Add(this.TableValuedParameter(CommonConstant.ParamPetDetails, Pet.ToDataTable(this._policy.Pets)));
+            command.CommandText = CommonConstant.AddPetToPolicyStoredProcedure;
+            command.Parameters.Add(this.NVarCharParameter(CommonConstant.ParamPolicyNumber, this._policyNumber));
+            command.Parameters.Add(this.TableValuedParameter(CommonConstant.ParamPetDetails, Pet.ToDataTable(this._pets)));
         }
     }
 }

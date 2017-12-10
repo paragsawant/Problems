@@ -15,5 +15,11 @@ namespace ClassLibrary
         Task<bool> EnrollPolicy(Policy policy);
 
         Task<bool> CancelPolicy(string PolicyNumber);
+
+        Task<bool> RemovePetFromPolicy(string policyNumber, int petId);
+
+        Task<bool> AddPetToPolicy(string policyNumber, IList<Pet> pets);
+
+        Task<bool> TransferPet(int oldPetOwnerId, int petId, int newPetOwnerId);
     }
 }

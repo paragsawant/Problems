@@ -79,8 +79,8 @@ CREATE TRIGGER [dbo].[AutoIncrement_PolicyNumber] ON [dbo].[PetOwner]
   DECLARE @policyDate date
   DECLARE @name VARCHAR(MAX)
   SELECT @countryId = CountryId, @name = name, @policyDate = PolicyDate  from inserted
-  select @country = IsoCode FROM [dbo].[Country] Where [Id] = @countryId
-  SELECT @id = MAX(id) +1 FROM [dbo].[PetOwner]
+  SELECT @country = IsoCode FROM [dbo].[Country] Where [Id] = @countryId
+  SELECT @id = ISNULL(MAX(id), 0) + 1 FROM [dbo].[PetOwner]
   SET @policyNumber =  @country+REPLICATE('0',10-LEN(RTRIM(@id))) + RTRIM(@id)
 
   INSERT INTO [dbo].[PetOwner]

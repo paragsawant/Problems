@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Common;
+using System.Data;
 
 namespace ClassLibrary.Data.Sql
 {
@@ -16,14 +17,18 @@ namespace ClassLibrary.Data.Sql
             this._policyNumber = policyNumber;
         }
 
-        protected override Task<bool> ReadAsync(DbDataReader reader)
+        protected override async Task<bool> ReadAsync(DbDataReader reader)
         {
-            throw new NotImplementedException();
+            await reader.ReadAsync();
+            int result = (int)reader.GetValue(0);
+            return result == 1 ? true : false;
         }
 
         protected override void SetCommandDetails(DbCommand command)
         {
-            throw new NotImplementedException();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = CommonConstant.CancelPolicyStoredProcedure;
+            command.Parameters.Add(this.NVarCharParameter(CommonConstant.ParamPolicyNumber, this._policyNumber));
         }
     }
 }
