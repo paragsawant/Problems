@@ -13,26 +13,25 @@ namespace WebAPI.Data.Sql
 
         private const string CreateDatabaseTemplate = "CREATE DATABASE {0}";
 
-        /// <summary>Database exists query template</summary>
         private const string DatabaseExistsTemplate = "SELECT database_id FROM sys.databases WHERE Name='{0}'";
+
+        private const string CloseConnection = "ALTER DATABASE {0} SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
 
         private const string DropDatabaseTemplate = "Drop DATABASE {0}";
 
-        private const string LocalServerConnectionStringTemplate =
-            "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog={0};Integrated Security=SSPI;Connection Timeout=60";
+        private const string LocalServerConnectionStringTemplate = "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog={0};Integrated Security=SSPI;Connection Timeout=60";
 
 
-        static SqlSetup()
+        public static void Setup()
         {
             try
             {
-                CreateMetadataSqlDatabase(PetInsuranceDatabaseName);
-                RunTestSqlScript(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName),
-                    "Schema.sql");
-                RunTestSqlScript(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName),
-                    "InsertDataScript.sql");
-                RunTestSqlScript(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName),
-                    "SqlLogic.sql");
+                if (!CreateMetadataSqlDatabase(PetInsuranceDatabaseName))
+                {
+                    SetupTables(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName));
+                    SetupTempData(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName));
+                    SetupLogic(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName));
+                }
             }
             catch (Exception ex)
             {
@@ -46,10 +45,10 @@ namespace WebAPI.Data.Sql
             }
         }
 
-        public static void CreateLocalTestDatabase(string databaseName)
+        public static bool CreateLocalTestDatabase(string databaseName)
         {
             var serverConnectionstring = GetLocalServerConnectionString();
-            CreateTestDatabase(serverConnectionstring, databaseName);
+            return CreateTestDatabase(serverConnectionstring, databaseName);
         }
 
         public static void ExecuteScript(string connectionString, string script)
@@ -93,8 +92,19 @@ namespace WebAPI.Data.Sql
         }
 
 
-        public static void SetupBaseTables(string connectionString)
+        public static void SetupTables(string connectionString)
         {
+            RunTestSqlScript(connectionString, "Schema.sql");
+        }
+
+        public static void SetupTempData(string connectionString)
+        {
+            RunTestSqlScript(connectionString, "InsertDataScript.sql");
+        }
+
+        public static void SetupLogic(string connectionString)
+        {
+            RunTestSqlScript(connectionString, "SqlLogic.sql");
         }
 
         private static bool CreateDatabaseIfNotExists(string connectionString, string databaseName)
@@ -110,25 +120,22 @@ namespace WebAPI.Data.Sql
                     {
                         return true;
                     }
+
+                    var commandText = string.Format(CreateDatabaseTemplate, databaseName);
+                    ExecuteNonQuery(connectionString, commandText);
+                    return false;
                 }
             }
-
-            var commandText = string.Format(DropDatabaseTemplate, databaseName);
-            ExecuteNonQuery(connectionString, commandText);
-
-            commandText = string.Format(CreateDatabaseTemplate, databaseName);
-            ExecuteNonQuery(connectionString, commandText);
-            return false;
         }
 
-        private static void CreateMetadataSqlDatabase(string databaseName)
+        private static bool CreateMetadataSqlDatabase(string databaseName)
         {
-            CreateLocalTestDatabase(databaseName);
+            return CreateLocalTestDatabase(databaseName);
         }
 
-        private static void CreateTestDatabase(string serverConnectionString, string databaseName)
+        private static bool CreateTestDatabase(string serverConnectionString, string databaseName)
         {
-            CreateDatabaseIfNotExists(serverConnectionString, databaseName);
+            return CreateDatabaseIfNotExists(serverConnectionString, databaseName);
         }
 
         private static void ExecuteNonQuery(string connectionString, string commandText)

@@ -5,11 +5,6 @@ namespace WebAPI
 {
     public static class WebApiConfig
     {
-        static WebApiConfig()
-        {
-            var setup = new SqlSetup();
-        }
-
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services

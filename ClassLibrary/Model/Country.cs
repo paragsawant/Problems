@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 namespace ClassLibrary.Model
 {
@@ -13,5 +11,8 @@ namespace ClassLibrary.Model
         public string Name { get; set; }
 
         public string IsoCode { get; set; }
+
+        [NotMapped]
+        public SelectList CountryList { get; set; }
     }
 }
