@@ -32,6 +32,10 @@ namespace WebAPI.Data.Sql
                     SetupTempData(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName));
                     SetupLogic(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName));
                 }
+                else
+                {
+                    SetupLogic(string.Format(LocalServerConnectionStringTemplate, PetInsuranceDatabaseName));
+                }
             }
             catch (Exception ex)
             {

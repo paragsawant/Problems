@@ -15,8 +15,8 @@ namespace ProblemD_UI
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Policy", action = "PolicyDetailsView", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{id}/{policyNumber}",
+                defaults: new { controller = "Policy", action = "PoliciesList", id = UrlParameter.Optional, policyNumber = UrlParameter.Optional }
             );
         }
     }

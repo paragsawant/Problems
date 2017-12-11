@@ -1,0 +1,82 @@
+﻿@model ClassLibrary.Model.Policy
+
+<div>
+    <h4>Policy</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PolicyNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PolicyNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PetOwnerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PetOwnerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PolicyDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PolicyDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Add Pet", "AddPetToPolicy", new { PetOwnerId  =  Model.PolicyId, policyNumber = Model.PolicyNumber})
+</p>
+<table border="1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Pets[0].PetName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pets[0].PetType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pets[0].DateOfBirth)
+        </th>
+        <th colspan="2" align="center">Actions</th>
+    </tr>
+
+    @foreach (var pet in Model.Pets)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => pet.PetName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => pet.PetType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => pet.DateOfBirth)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeletePet", new { id = pet.PetId, policyNumber = Model.PolicyNumber })
+            </td>
+            <td>
+                @Html.ActionLink("Transfer Pet", "TransferPet", new { id = pet.PetId, policyNumber = Model.PolicyNumber })
+            </td>
+        </tr>
+    }
+</table>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.PolicyId, PolicyNumber = Model.PolicyNumber }) |*@
+
+    @Html.ActionLink("Back to List", "PoliciesList")
+</p>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,15 @@ namespace ClassLibrary.Model
     {
         public int PetId { get; set; }
         public int PetOwnerId { get; set; }
+        [Required]
+        [Display(Name = "Pet Name")]
         public string PetName { get; set; }
+        [Required]
+        [Display(Name = "Pet Type")]
         public PetType PetType { get; set; }
+        [Required]
+        [Display(Name = "Date Of Birth")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime DateOfBirth { get; set; }
 
         internal static DataTable ToDataTable(IList<Pet> pets)

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ClassLibrary.Model.Policy>
+
+@{
+    ViewBag.Title = "PoliciesList";
+}
+
+<p>
+    @Html.ActionLink("Enroll Policy", "Create")
+</p>
+<fieldset>
+    <legend>List of Policy</legend>
+
+    <table border="1">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PolicyNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PetOwnerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PolicyDate)
+            </th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PolicyNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PetOwnerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PolicyDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit Pet", "Edit", new { id = item.PolicyNumber }) |
+                    @Html.ActionLink("View Policy", "Details", new { id = item.PolicyNumber }) |
+                    @Html.ActionLink("Cancel Policy", "Delete", new { id = item.PolicyNumber })
+                </td>
+            </tr>
+        }
+    </table>
+</fieldset>

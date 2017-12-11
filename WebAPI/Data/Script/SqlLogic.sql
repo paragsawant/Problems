@@ -159,8 +159,9 @@ BEGIN
 IF @policyNumber IS NULL
 BEGIN
 Select DISTINCT po.Id AS PolicyId,
-po.PolicyDate,po.PolicyNumber,po.Name AS [PetOwnerName],po.countryid
+po.PolicyDate,po.PolicyNumber,po.Name AS [PetOwnerName],c.[Name]
  FROM [dbo].[PetOwner] AS po INNER JOIN [dbo].[Pet] AS p ON po.Id = p.PetOwnerId
+ INNER JOIN [dbo].[country] AS c ON c.Id = po.countryId
 
  Select DISTINCT p.Id AS [PetId],
 p.Name AS PetName,p.PetType,p.DateOfBirth, po.Id AS [PetOwnerId]
@@ -170,8 +171,10 @@ p.Name AS PetName,p.PetType,p.DateOfBirth, po.Id AS [PetOwnerId]
  BEGIN
  
 Select DISTINCT po.Id AS PolicyId,
-po.PolicyDate,po.PolicyNumber,po.Name AS [PetOwnerName],po.countryid
- FROM [dbo].[PetOwner] AS po INNER JOIN [dbo].[Pet] AS p ON po.Id = p.PetOwnerId WHERE po.PolicyNumber = @policyNumber
+po.PolicyDate,po.PolicyNumber,po.Name AS [PetOwnerName],c.[Name]
+ FROM [dbo].[PetOwner] AS po INNER JOIN [dbo].[Pet] AS p ON po.Id = p.PetOwnerId 
+ INNER JOIN [dbo].[country] AS c ON c.Id = po.countryId
+ WHERE po.PolicyNumber = @policyNumber
 
  Select DISTINCT p.Id AS [PetId],
 p.Name AS PetName,p.PetType,p.DateOfBirth, po.Id AS [PetOwnerId]

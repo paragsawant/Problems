@@ -55,7 +55,7 @@ namespace ClassLibrary.Data.Sql
                 PolicyDate = (DateTime)reader.GetValue(1),
                 PolicyNumber = (string)reader.GetValue(2),
                 PetOwnerName = (string)reader.GetValue(3),
-                CountryId = (int)reader.GetValue(4)
+                Country = (string)reader.GetValue(4)
             };
         }
 
