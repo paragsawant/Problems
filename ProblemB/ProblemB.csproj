@@ -42,6 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="League\AFCLeague.cs" />
+    <Compile Include="League\ILeague.cs" />
+    <Compile Include="League\ConcreteLeagueFactory.cs" />
+    <Compile Include="League\LeagueFactory.cs" />
+    <Compile Include="League\NFCLeague.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
